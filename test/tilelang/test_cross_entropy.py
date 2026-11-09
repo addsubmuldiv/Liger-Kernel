@@ -5,10 +5,14 @@ import math
 import pytest
 import torch
 import torch.nn.functional as F
-import torch_npu  # noqa: F401
 
-from operators.cross_entropy.cross_entropy import cross_entropy_kernel
-from operators.cross_entropy.runtime import cross_entropy
+pytest.importorskip("torch_npu")
+if not torch.npu.is_available():
+    pytest.skip("Ascend NPU required", allow_module_level=True)
+pytest.importorskip("tilelang.ascend.language")
+
+from liger_kernel.ops.tilelang.ascend.ops.cross_entropy import cross_entropy
+from liger_kernel.ops.tilelang.ascend.ops.cross_entropy import cross_entropy_kernel
 
 SHAPES = (
     (128, 32000),

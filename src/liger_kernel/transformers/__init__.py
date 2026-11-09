@@ -39,7 +39,6 @@ from liger_kernel.transformers.swiglu import LigerSwiGLUMLPForMuseGlimmer  # noq
 from liger_kernel.transformers.tiled_mlp import LigerTiledGEGLUMLP  # noqa: F401
 from liger_kernel.transformers.tiled_mlp import LigerTiledSwiGLUMLP  # noqa: F401
 from liger_kernel.transformers.tvd import LigerTVDLoss  # noqa: F401
-from liger_kernel.transformers.vocab_parallel_cross_entropy import LigerVocabParallelCrossEntropy  # noqa: F401
 
 # Static-only imports for IDEs and type checkers
 if TYPE_CHECKING:
@@ -115,6 +114,10 @@ def __getattr__(name: str):
     Handles lazy access to transformer-dependent attributes.
     If 'transformers' is not installed, raises a user-friendly ImportError.
     """
+    if name == "LigerVocabParallelCrossEntropy":
+        module = importlib.import_module("liger_kernel.transformers.vocab_parallel_cross_entropy")
+        return getattr(module, name)
+
     if not _TRANSFORMERS_AVAILABLE:
         raise ImportError(
             f"The attribute '{name}' requires the 'transformers' library, which is not installed.\n"
