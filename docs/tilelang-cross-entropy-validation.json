@@ -1,0 +1,509 @@
+{
+  "schema_version": 2,
+  "kind": "Integrated public TileLang Ascend CrossEntropy validation",
+  "date": "2026-11-09",
+  "baseline_head": "481d8976c246b65894478cac7bc27c6f26a2b6f5",
+  "reference_integration": {
+    "pull_request": "https://github.com/linkedin/Liger-Kernel/pull/1572",
+    "head": "b8c8858efdecd5350724de12a488c8f85c18c8d5",
+    "scope": "Optional DSL packaging, lazy public exports, TileLang Ascend registration; CE only"
+  },
+  "environment": {
+    "python": "3.11.18",
+    "architecture": "aarch64",
+    "torch": "2.9.0+cpu",
+    "torch_npu": "2.9.0.post4",
+    "cann": "9.2.0 B237",
+    "ptoas": "0.67",
+    "tilelang_commit": "fd2ddda1a7b8dec637c592eb92bbca46030ed585",
+    "hardware": {
+      "full_soc": "Ascend950DT_9582",
+      "full_soc_source": "asys",
+      "npu_arch": "3510",
+      "npu_arch_source": "asys",
+      "short_soc": "Ascend950",
+      "ccec_aiv_version": "dav-c310-vec",
+      "variant_dir": "dav_c310",
+      "ini_path": "/home/cann/920_b111/cann-9.2.0/aarch64-linux/data/platform_config/Ascend950DT_9582.ini",
+      "npu_count": 8,
+      "warnings": []
+    },
+    "cpu_threads": 8,
+    "precision_physical_device": 2,
+    "benchmark_physical_device": 1,
+    "wheel_smoke_physical_device": 3
+  },
+  "source_sha256": {
+    "setup.py": "08281b30a185314b5210f3fa430b1755a79b02053bddc1c635b0a79cedd6475c",
+    "src/liger_kernel/functional.py": "8ddb5f46cb4ab600f5b8d29ab8f8987b23dc4cad11a5d2a6e98c5938ca2b2194",
+    "src/liger_kernel/ops/__init__.py": "dd9d4a31c7624edfb65486590aaf6ae9fe52e56c54e0d565c85c7b84728a5b98",
+    "src/liger_kernel/ops/backends/_ascend/ub_manager.py": "2695b24c7197e4a8643e85f3f76b2ec0b00d317f58ac103425146c89a50571ca",
+    "src/liger_kernel/ops/tilelang/__init__.py": "3bd5f3c049c6e0e64b4e129552509575cfb11d9929f5f61b13d05ce0a5a24d25",
+    "src/liger_kernel/ops/tilelang/ascend/__init__.py": "61d52be4b432a05a679e0115a702958345c809d88a9c5fa90ec7433d0fa76a2b",
+    "src/liger_kernel/ops/tilelang/ascend/cross_entropy.py": "280c51f881babe3e537b435d4a67f34235943109427e91d8798c6f6417b263c8",
+    "src/liger_kernel/ops/tilelang/ascend/dispatch_common.py": "9d4c354e33f8cfec708948c82069ddea9502af3beb098b6b65030afd1c2825ae",
+    "src/liger_kernel/ops/tilelang/ascend/ops/__init__.py": "8d89d7f86a4bfc55b007a4986973f595b9262252dcf885d4665010afe2b99eb3",
+    "src/liger_kernel/ops/tilelang/ascend/ops/cross_entropy.py": "412d2607021ddcf3035e80d45cfce6f2770f08bb2a245be99041741753097bfc",
+    "src/liger_kernel/transformers/__init__.py": "949c62ed78a065c9aa5396ee7207775ef2d9f6ade420a2a7301ab2ba995f23d1",
+    "src/liger_kernel/transformers/functional.py": "854e59d1d1f672100483ed3a6f9d5ff42b4292a183fca01558469c1920e6d6a6",
+    "test/tilelang/test_cross_entropy.py": "bc98ec53b3b55a3aabbd0202dbbaf8300f4c9ac5e83e6b29aa1bf46f998a8b45",
+    "test/tilelang/test_cross_entropy_integration.py": "14a01e8fd94c04180d3383f42da3eb60e6b094302f37ed007b624c46d0b3a7be",
+    "test/tilelang/test_imports.py": "2ab8877b5ba76b487b9a5fe091d1bfa23de2ea0ad23c328a47ce28eecc3c3899"
+  },
+  "numerical_kernel_preservation": {
+    "kernel_functions": [
+      "baseline_cross_entropy_kernel",
+      "simd_cross_entropy_kernel",
+      "simd_scale_gradient_kernel",
+      "simd_deferred_gradient_kernel",
+      "cross_entropy_kernel",
+      "scale_gradient_kernel",
+      "baseline_scale_gradient_kernel"
+    ],
+    "all_kernel_asts_unchanged": true
+  },
+  "tests": [
+    {
+      "scope": "Independent CPU-reference S15 numerical suite",
+      "junit": "precision.xml",
+      "passed": 79,
+      "skipped": 0,
+      "failed_or_error": 0,
+      "sha256": "4eb41a981bfe2fd98471ea36ba5b70101a500d9b2170bfcd441d2234377f7e4d"
+    },
+    {
+      "scope": "Public CE entrypoints; 29 successful cases extracted from integration.xml",
+      "junit": "public-integration.xml",
+      "passed": 29,
+      "skipped": 0,
+      "failed_or_error": 0,
+      "sha256": "cd8924858406b0682ddd446802dab4f7f077b2f2765232d24a5d8369e9017b5a"
+    },
+    {
+      "scope": "Optional imports, packaging contracts, existing backend registry",
+      "junit": "imports-backends.xml",
+      "passed": 80,
+      "skipped": 16,
+      "failed_or_error": 0,
+      "sha256": "dc2ed99fff3b555cc0f576c41639507a4fbbd3be0c57d81d4ca4e4cb2ad25c06"
+    },
+    {
+      "scope": "Both backend orders and exact-SoC CANN configuration",
+      "junit": "coexistence.xml",
+      "passed": 3,
+      "skipped": 0,
+      "failed_or_error": 0,
+      "sha256": "8107f01eaca257acdb195eff01fdb7c3aeec1d9a83ad232fc8aac696c980232d"
+    }
+  ],
+  "validation_totals": {
+    "passed": 191,
+    "skipped": 16,
+    "failed_or_error": 0,
+    "note": "Aggregated scopes, not a single full-repository test run. Initial host-test expectation failures were corrected; final scoped reruns passed. Raw initial logs are retained locally."
+  },
+  "style": {
+    "command": "make checkstyle",
+    "result": "PASS; 503 Python files unchanged"
+  },
+  "wheel": {
+    "wheel": "liger_kernel-0.8.4-py3-none-any.whl",
+    "sha256": "00636df071c2170add632c84e2251bfe7d9e05894b5864861fb2c767023f7e3e",
+    "dsl_dependencies_optional": true,
+    "packaged_sources_match_final_worktree": true,
+    "extras": [
+      "triton",
+      "tilelang",
+      "cutile",
+      "cutile-tileiras",
+      "cutedsl",
+      "lck",
+      "dev"
+    ],
+    "public_module_forward_backward": "PASS from unpacked final wheel on NPU"
+  },
+  "public_benchmark": {
+    "device": 1,
+    "warmup": 10,
+    "samples": 30,
+    "upstream": 0.7,
+    "cache_bytes": 201326592,
+    "timer": "NPU Events over public call; fresh forward graph before each backward timing",
+    "summary": {
+      "forward": 1.5420725517211642,
+      "backward": 1.2217075329541478,
+      "full": 1.387996558139063,
+      "no-grad-forward": 1.5598953248886902
+    },
+    "sources": {
+      "src/liger_kernel/functional.py": "8ddb5f46cb4ab600f5b8d29ab8f8987b23dc4cad11a5d2a6e98c5938ca2b2194",
+      "src/liger_kernel/ops/tilelang/ascend/cross_entropy.py": "280c51f881babe3e537b435d4a67f34235943109427e91d8798c6f6417b263c8",
+      "src/liger_kernel/ops/tilelang/ascend/ops/cross_entropy.py": "412d2607021ddcf3035e80d45cfce6f2770f08bb2a245be99041741753097bfc",
+      "src/liger_kernel/ops/backends/_ascend/ops/cross_entropy.py": "8160cd8bbe9d3cfe091a9cd899847b07397be47bf474992bac63f4ab495f4bb8"
+    },
+    "cases": [
+      {
+        "N": 1024,
+        "V": 128256,
+        "dtype": "float32",
+        "validation": {
+          "ascend-tilelang": "PASS",
+          "ascend-triton": "PASS"
+        },
+        "timings": {
+          "forward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                440.22250175476074,
+                452.80300080776215
+              ],
+              "geomean_p50_us": 446.46844212962714
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                568.8064992427826,
+                579.2175233364105
+              ],
+              "geomean_p50_us": 573.9884073298504
+            }
+          },
+          "backward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                378.01599502563477,
+                376.8620043992996
+              ],
+              "geomean_p50_us": 377.4385586825443
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                524.199515581131,
+                526.3634920120239
+              ],
+              "geomean_p50_us": 525.2803894419582
+            }
+          },
+          "full": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                752.7265250682831,
+                753.090500831604
+              ],
+              "geomean_p50_us": 752.9084909555124
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                1053.8580417633057,
+                1058.8279962539673
+              ],
+              "geomean_p50_us": 1056.3400961320983
+            }
+          },
+          "no-grad-forward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                420.7634925842285,
+                435.59248745441437
+              ],
+              "geomean_p50_us": 428.11378903834793
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                559.8434805870056,
+                566.7259991168976
+              ],
+              "geomean_p50_us": 563.274227960726
+            }
+          }
+        },
+        "speedup_triton_over_tilelang": {
+          "forward": 1.2856192132907778,
+          "backward": 1.3916977408865123,
+          "full": 1.4030125955831663,
+          "no-grad-forward": 1.3157114822813407
+        }
+      },
+      {
+        "N": 2048,
+        "V": 128256,
+        "dtype": "float32",
+        "validation": {
+          "ascend-tilelang": "PASS",
+          "ascend-triton": "PASS"
+        },
+        "timings": {
+          "forward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                606.1800122261047,
+                607.538491487503
+              ],
+              "geomean_p50_us": 606.8588717302599
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                889.7694945335388,
+                882.1555078029633
+              ],
+              "geomean_p50_us": 885.9543217783977
+            }
+          },
+          "backward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                679.0310144424438,
+                678.4349977970123
+              ],
+              "geomean_p50_us": 678.7329406971216
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                826.6364932060242,
+                826.4000117778778
+              ],
+              "geomean_p50_us": 826.5182440342627
+            }
+          },
+          "full": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                1246.7540502548218,
+                1253.1484961509705
+              ],
+              "geomean_p50_us": 1249.9471841429784
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                1674.788475036621,
+                1659.5890522003174
+              ],
+              "geomean_p50_us": 1667.1714422704222
+            }
+          },
+          "no-grad-forward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                610.91148853302,
+                597.3119735717773
+              ],
+              "geomean_p50_us": 604.0734615039223
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                907.3545038700104,
+                899.0720212459564
+              ],
+              "geomean_p50_us": 903.2037686928861
+            }
+          }
+        },
+        "speedup_triton_over_tilelang": {
+          "forward": 1.4599017383603345,
+          "backward": 1.2177370427687684,
+          "full": 1.3337935101742016,
+          "no-grad-forward": 1.4951886256420512
+        }
+      },
+      {
+        "N": 4096,
+        "V": 128256,
+        "dtype": "float32",
+        "validation": {
+          "ascend-tilelang": "PASS",
+          "ascend-triton": "PASS"
+        },
+        "timings": {
+          "forward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                962.8119766712189,
+                973.9420115947723
+              ],
+              "geomean_p50_us": 968.361003627627
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                1637.3770236968994,
+                1611.1440062522888
+              ],
+              "geomean_p50_us": 1624.2075537641344
+            }
+          },
+          "backward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                1274.586021900177,
+                1274.2249965667725
+              ],
+              "geomean_p50_us": 1274.4054964491525
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                1497.9419708251953,
+                1470.800518989563
+              ],
+              "geomean_p50_us": 1484.3092090618939
+            }
+          },
+          "full": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                2168.6044931411743,
+                2178.15899848938
+              ],
+              "geomean_p50_us": 2173.3764954328435
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                3036.968946456909,
+                3027.361512184143
+              ],
+              "geomean_p50_us": 3032.1614241662787
+            }
+          },
+          "no-grad-forward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                961.6950154304504,
+                975.4509925842285
+              ],
+              "geomean_p50_us": 968.5485828624901
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                1627.0004510879517,
+                1622.71249294281
+              ],
+              "geomean_p50_us": 1624.8550575371341
+            }
+          }
+        },
+        "speedup_triton_over_tilelang": {
+          "forward": 1.6772748465495892,
+          "backward": 1.1647071620434717,
+          "full": 1.3951385922034654,
+          "no-grad-forward": 1.6776185379725277
+        }
+      },
+      {
+        "N": 8192,
+        "V": 128256,
+        "dtype": "float32",
+        "validation": {
+          "ascend-tilelang": "PASS",
+          "ascend-triton": "PASS"
+        },
+        "timings": {
+          "forward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                1696.1424946784973,
+                1700.4680037498474
+              ],
+              "geomean_p50_us": 1698.3038721033502
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                3056.0905933380127,
+                3045.2475547790527
+              ],
+              "geomean_p50_us": 3050.6642566080345
+            }
+          },
+          "backward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                2460.0985050201416,
+                2461.3934755325317
+              ],
+              "geomean_p50_us": 2460.7459050913635
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                2774.830460548401,
+                2779.743552207947
+              ],
+              "geomean_p50_us": 2777.28591995488
+            }
+          },
+          "full": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                4080.4100036621094,
+                4045.480966567993
+              ],
+              "geomean_p50_us": 4062.90794943827
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                5777.172565460205,
+                5774.716854095459
+              ],
+              "geomean_p50_us": 5775.944579268477
+            }
+          },
+          "no-grad-forward": {
+            "ascend-tilelang": {
+              "p50_us_by_order": [
+                1696.9410181045532,
+                1698.3745098114014
+              ],
+              "geomean_p50_us": 1697.6576126540301
+            },
+            "ascend-triton": {
+              "p50_us_by_order": [
+                3045.307517051697,
+                3046.021580696106
+              ],
+              "geomean_p50_us": 3045.6645279471504
+            }
+          }
+        },
+        "speedup_triton_over_tilelang": {
+          "forward": 1.7963005953874351,
+          "backward": 1.1286357986855062,
+          "full": 1.4216282158366518,
+          "no-grad-forward": 1.7940393311615503
+        }
+      }
+    ],
+    "metric": "NPU Event elapsed time over complete public operator calls; not isolated kernel latency or model throughput",
+    "orders": [
+      [
+        "ascend-tilelang",
+        "ascend-triton"
+      ],
+      [
+        "ascend-triton",
+        "ascend-tilelang"
+      ]
+    ],
+    "aggregation": "Geometric mean of the two order-specific median ratios per shape, then geometric mean over four shapes",
+    "settings": {
+      "reduction": "mean",
+      "class_weight": null,
+      "label_smoothing": 0,
+      "softcap": null,
+      "lse_square_scale": 0,
+      "ignored_labels": false
+    },
+    "correctness": "Full loss and input gradients for both providers compared with independent chunked CPU FP64 reference; rtol=1e-6, atol=1e-8",
+    "timing_boundaries": "Fresh input clone outside timing; cache zero before start event; fresh forward before each backward-only measurement, outside timed region; event synchronized before sample read",
+    "raw_result_sha256": "b230d990c0263ff161442a68fd0cc2c1b6585c21c4eaec9f1496a97afbb32d54",
+    "benchmark_script_sha256": "d6df52efcf25cf6ec019846d832d7047389e4ce7f29d3c5b91eab5b219b35e11",
+    "full_path_shape_wins": 4
+  },
+  "local_artifact_directory": "/home/zyh/code/liger-ce-integration-artifacts",
+  "not_verified": [
+    "Model convergence or end-to-end throughput",
+    "Full repository numerical suite",
+    "Non-Ascend950 device execution",
+    "BF16 performance matrix (BF16 correctness is covered)"
+  ],
+  "historical_standalone": {
+    "commit": "481d8976c246b65894478cac7bc27c6f26a2b6f5",
+    "training_geomean_speedup": 1.403,
+    "inference_geomean_speedup": 1.617,
+    "note": "Pre-integration standalone wrapper; superseded for public-path performance by measurements above"
+  }
+}

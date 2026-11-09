@@ -143,8 +143,10 @@ pip3 install torch torchvision --index-url https://download.pytorch.org/whl/rocm
 - `CANN == 9.1.0`
 
 ```bash
-pip install -e ".[dev]" --extra-index-url https://triton-ascend.osinfra.cn/pypi/simple
+pip install -e ".[dev,triton]" --extra-index-url https://triton-ascend.osinfra.cn/pypi/simple
 ```
+
+For the optional Ascend950 TileLang CrossEntropy backend, installation and selection examples are in [TileLang backend](docs/tilelang.md).
 
 ### Optional Dependencies
 
@@ -160,7 +162,7 @@ pip install -e ".[dev]" --extra-index-url https://triton-ascend.osinfra.cn/pypi/
 To install the stable version:
 
 ```bash
-$ pip install liger-kernel
+$ pip install "liger-kernel[triton]"
 ```
 
 To also install the matching native Liger communication kernels:
@@ -196,16 +198,16 @@ cd Liger-Kernel
 # Install Default Dependencies
 # Setup.py will detect the local backend and select default dependencies.
 # On ROCm, install ROCm PyTorch first from the PyTorch ROCm index.
-pip install -e .
+pip install -e ".[triton]"
 
 # Setup Development Dependencies
-pip install -e ".[dev]"
+pip install -e ".[dev,triton]"
 
 # ROCm source installs
 pip3 install torch torchvision --index-url https://download.pytorch.org/whl/rocm7.2
 # Then choose one:
-pip install -e .
-pip install -e ".[dev]"
+pip install -e ".[triton]"
+pip install -e ".[dev,triton]"
 
 # Setup cuTile Dependencies
 pip install -e ".[cutile]"
